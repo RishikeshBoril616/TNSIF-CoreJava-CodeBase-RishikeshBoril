@@ -1,4 +1,4 @@
-package association;
+package com.TSNIF.Day5.association;
 
 public class Person {
 	private String name;

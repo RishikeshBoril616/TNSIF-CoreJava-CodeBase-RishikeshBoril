@@ -1,4 +1,4 @@
-package HierarchicalInheritance;
+package com.TNSIF.Day5.HierarchicalInheritance;
 
 public class employee extends person{
 	

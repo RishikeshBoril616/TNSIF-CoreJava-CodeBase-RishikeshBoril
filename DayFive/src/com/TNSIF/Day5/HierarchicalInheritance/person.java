@@ -1,4 +1,4 @@
-package HierarchicalInheritance;
+package com.TNSIF.Day5.HierarchicalInheritance;
 
 public class person {
 	private String name;

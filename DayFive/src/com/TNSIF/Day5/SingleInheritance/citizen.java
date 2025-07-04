@@ -1,4 +1,4 @@
-package SingleInheritance;
+package com.TNSIF.Day5.SingleInheritance;
 //Parent Class
 public class citizen {
 	private String name;

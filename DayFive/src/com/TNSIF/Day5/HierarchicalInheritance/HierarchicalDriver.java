@@ -1,4 +1,4 @@
-package HierarchicalInheritance;
+package com.TNSIF.Day5.HierarchicalInheritance;
 
 public class HierarchicalDriver {
 	public static void main(String[] args) {

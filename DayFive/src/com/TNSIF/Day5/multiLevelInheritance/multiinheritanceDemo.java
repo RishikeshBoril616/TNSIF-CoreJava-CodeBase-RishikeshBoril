@@ -1,4 +1,4 @@
-package MultiInheritance;
+package com.TNSIF.Day5.multiLevelInheritance;
 
 public class multiinheritanceDemo {
 	public static void main(String[] args) {

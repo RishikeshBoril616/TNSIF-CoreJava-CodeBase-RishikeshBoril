@@ -1,4 +1,4 @@
-package association;
+package com.TSNIF.Day5.association;
 
 //Contained Class
 public class Address {

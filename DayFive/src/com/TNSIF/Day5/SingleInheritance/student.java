@@ -1,4 +1,4 @@
-package SingleInheritance;
+package com.TNSIF.Day5.SingleInheritance;
 //Child Class
 public class student  extends citizen{
 	//data members

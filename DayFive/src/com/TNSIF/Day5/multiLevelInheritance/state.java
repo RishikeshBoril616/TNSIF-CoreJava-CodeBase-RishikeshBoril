@@ -1,4 +1,4 @@
-package MultiInheritance;
+package com.TNSIF.Day5.multiLevelInheritance;
 //Child of Country
 public class state extends country {
 	//data members

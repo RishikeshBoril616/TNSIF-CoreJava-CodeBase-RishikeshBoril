@@ -1,4 +1,4 @@
-package SingleInheritance;
+package com.TNSIF.Day5.SingleInheritance;
 
 public class demo {
 public static void main(String[] args) {

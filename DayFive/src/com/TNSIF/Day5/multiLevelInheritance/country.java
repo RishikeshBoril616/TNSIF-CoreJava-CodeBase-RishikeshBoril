@@ -1,4 +1,4 @@
-package MultiInheritance;
+package com.TNSIF.Day5.multiLevelInheritance;
 
 //Parent
 public class country {

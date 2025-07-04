@@ -1,4 +1,4 @@
-package MultiInheritance;
+package com.TNSIF.Day5.multiLevelInheritance;
 
 public class city extends state{
 	private String cityName;
