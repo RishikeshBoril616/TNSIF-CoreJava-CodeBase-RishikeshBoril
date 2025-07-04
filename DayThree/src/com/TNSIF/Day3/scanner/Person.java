@@ -1,4 +1,4 @@
-package scanner;
+package com.TNSIF.Day3.scanner;
 
 public class Person {
 	//data members

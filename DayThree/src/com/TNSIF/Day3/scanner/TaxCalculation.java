@@ -1,4 +1,4 @@
-package scanner;
+package com.TNSIF.Day3.scanner;
 
 public class TaxCalculation {
 	//function to calculate tax 

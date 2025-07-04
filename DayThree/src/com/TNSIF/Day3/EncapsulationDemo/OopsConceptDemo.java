@@ -1,4 +1,4 @@
-package EncapsulationDemo;
+package com.TNSIF.Day3.EncapsulationDemo;
 
 public class OopsConceptDemo {
 	private int serailNum;

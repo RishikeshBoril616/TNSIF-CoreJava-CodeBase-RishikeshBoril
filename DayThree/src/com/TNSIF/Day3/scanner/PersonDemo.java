@@ -1,4 +1,4 @@
-package scanner;
+package com.TNSIF.Day3.scanner;
 import java.util.Scanner;
 public class PersonDemo {
 public static void main(String[] args) {

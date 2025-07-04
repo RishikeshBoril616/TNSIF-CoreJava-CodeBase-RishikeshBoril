@@ -1,4 +1,4 @@
-package Constructor;
+package com.TNSIF.Day3.Constructor;
 import java.util.Scanner;
 
 public class ConstructorDemo {
