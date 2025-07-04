@@ -1,4 +1,4 @@
-package com.TNSIF.DayFour.FirstPackage;
+package com.TNSIF.Day4.FirstPackage;
 
 public class Executor {
 public static void main(String[] args) {

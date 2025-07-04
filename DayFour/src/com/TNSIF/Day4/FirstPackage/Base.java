@@ -1,4 +1,4 @@
-package com.TNSIF.DayFour.FirstPackage;
+package com.TNSIF.Day4.FirstPackage;
 
 public class Base {
 	//declare default, private, protected and public variables 

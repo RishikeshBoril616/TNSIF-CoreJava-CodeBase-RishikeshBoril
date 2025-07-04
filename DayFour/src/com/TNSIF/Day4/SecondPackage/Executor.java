@@ -1,5 +1,5 @@
-package com.TNSIF.DayFour.SecondPackage;
-import com.TNSIF.DayFour.FirstPackage.Base;
+package com.TNSIF.Day4.SecondPackage;
+import com.TNSIF.Day4.FirstPackage.Base;
 public class Executor {
 public static void main(String[] args) {
 		
