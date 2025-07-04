@@ -1,4 +1,4 @@
-package com.TNSIF.Day1;
+package com.TNSIF.DayOne;
 
 public class DayOne {
  public static void main(String[] args) {
