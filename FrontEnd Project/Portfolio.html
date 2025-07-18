@@ -1,0 +1,2363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        /* CSS Variables for Theme */
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --bg-color: #ffffff;
+            --surface-color: #f8fafc;
+            --text-color: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #60a5fa;
+            --bg-color: #0f172a;
+            --surface-color: #1e293b;
+            --text-color: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            background: var(--surface-color);
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-logo h2 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            color: var(--primary-color);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .theme-toggle button {
+            background: none;
+            border: 2px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle button:hover {
+            border-color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            padding: 4rem 0;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeInTab {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content.active {
+        animation: fadeInTab 0.5s ease-in-out;
+        }
+
+
+        /* Typography */
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        h3 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* About Section */
+        .about-content {
+            background: var(--surface-color);
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .goals {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .goals ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .goals li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .goals li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+
+/* Testimonials Section Styles */
+        .testimonials-showcase {
+            padding: 60px 20px;
+            background: var(--bg-color, #f8f9fa);
+            transition: all 0.3s ease;
+        }
+
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .testimonials-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-color, #333);
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .testimonials-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            border-radius: 2px;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .testimonial-card {
+            background: var(--card-bg, #ffffff);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .testimonial-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .testimonial-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .testimonial-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .quote-icon {
+            font-size: 3rem;
+            color: #007bff;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-color, #555);
+            margin-bottom: 25px;
+            font-style: italic;
+            position: relative;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--primary-color, #007bff);
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .testimonial-role {
+            color: var(--text-muted, #888);
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Dark mode styles */
+        .dark-mode .testimonials-showcase {
+            background: var(--bg-color, #1a1a1a);
+        }
+
+        .dark-mode .testimonials-title {
+            color: var(--text-color, #ffffff);
+        }
+
+        .dark-mode .testimonial-card {
+            background: var(--card-bg, #2d2d2d);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .dark-mode .testimonial-card:hover {
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.15);
+        }
+
+        .dark-mode .testimonial-text {
+            color: var(--text-color, #cccccc);
+        }
+
+        .dark-mode .testimonial-role {
+            color: var(--text-muted, #999);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .testimonials-title {
+                font-size: 2rem;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .testimonial-card {
+                padding: 25px;
+            }
+        }
+
+        /* Skills Section */
+        .skills-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+        }
+
+        .skills-category {
+            background: var(--surface-color);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .skill-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-name {
+            display: block;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-bar {
+            background: var(--border-color);
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+            animation: progressAnimation 2s ease-in-out;
+        }
+
+        @keyframes progressAnimation {
+            from { width: 0%; }
+        }
+
+        .soft-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .soft-skill {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .language-skills {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+ /* Resume Section */
+        .resume-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .resume-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .resume-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .resume-section {
+            background: var(--surface-color);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .resume-section h3 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resume-item {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(59, 130, 246, 0.03);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .resume-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .resume-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .resume-item-header h4 {
+            color: var(--text-color);
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .resume-date {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .resume-institution {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .resume-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .resume-details li {
+            padding: 0.3rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .resume-details li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .skill-category-resume {
+            background: rgba(59, 130, 246, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .skill-category-resume h5 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .skill-category-resume p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .cert-item {
+            background: rgba(59, 130, 246, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .cert-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .cert-item h5 {
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .cert-item p {
+            color: var(--text-secondary);
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .nptel-courses {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .course-item {
+            background: rgba(59, 130, 246, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .course-item:hover {
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .volunteer-activities {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .volunteer-item {
+            background: rgba(59, 130, 246, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .volunteer-item h5 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .volunteer-item p {
+            color: var(--text-secondary);
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+
+         /* Contact Section Styles */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-card, .contact-form-card {
+            background: var(--surface-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .contact-card h3, .contact-form-card h3 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+        }
+
+        .contact-text h4 {
+            color: var(--text-color);
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .contact-text p {
+            color: var(--text-secondary);
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .social-links h4 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .social-btn.linkedin {
+            background: #0077b5;
+        }
+
+        .social-btn.github {
+            background: #333;
+        }
+
+        .social-btn.twitter {
+            background: #1da1f2;
+        }
+
+        .social-icon {
+            font-size: 1.1rem;
+        }
+
+        /* Contact Form Styles */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 0.8rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+/* Form Validation Styles */
+
+/* Valid field styling */
+.valid {
+    border: 2px solid #28a745 !important;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
+    transition: all 0.3s ease;
+}
+
+.valid:focus {
+    border-color: #28a745 !important;
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.5);
+    outline: none;
+}
+
+/* Invalid field styling */
+.invalid {
+    border: 2px solid #dc3545 !important;
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.3);
+    transition: all 0.3s ease;
+}
+
+.invalid:focus {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 8px rgba(220, 53, 69, 0.5);
+    outline: none;
+}
+
+/* Error message styling */
+.error-message {
+    display: block;
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 5px;
+    font-weight: 500;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Fade-in animation for error messages */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form field container (optional - for better spacing) */
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/* Default input styling (optional enhancement) */
+input[type="text"],
+input[type="email"],
+textarea {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    outline: none;
+}
+
+/* Dark mode support */
+.dark-mode .error-message {
+    color: #ff6b6b;
+}
+
+.dark-mode .valid {
+    border-color: #51cf66 !important;
+    box-shadow: 0 0 5px rgba(81, 207, 102, 0.3);
+}
+
+.dark-mode .invalid {
+    border-color: #ff6b6b !important;
+    box-shadow: 0 0 5px rgba(255, 107, 107, 0.3);
+}
+
+        /* Achievements Showcase */
+        .achievements-showcase {
+            background: var(--surface-color);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            height: fit-content;
+        }
+
+        .achievements-showcase h3 {
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .achievement-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .achievement-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .achievement-icon {
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+        }
+
+        .achievement-card h4 {
+            color: var(--text-color);
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .achievement-card p {
+            color: var(--text-secondary);
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* Responsive Design for Contact */
+        @media (max-width: 768px) {
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .contact-card, .contact-form-card {
+                padding: 1.5rem;
+            }
+            
+            .social-buttons {
+                flex-direction: column;
+            }
+            
+            .social-btn {
+                justify-content: center;
+            }
+        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .nav-container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .about-content {
+                padding: 2rem;
+            }
+
+            .skills-content {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+        }
+
+        /* Projects Section */
+        .project-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            background: var(--surface-color);
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: var(--surface-color);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .project-card.hidden {
+            display: none;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .project-header h3 {
+            color: var(--text-color);
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .project-status {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-tag {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--primary-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-highlights {
+            margin-bottom: 1.5rem;
+        }
+
+        .highlight {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .highlight-icon {
+            font-size: 1.1rem;
+        }
+
+        .project-collaboration {
+            background: rgba(59, 130, 246, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-color);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .project-collaboration strong {
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Portfolio</h2>
+            </div>
+            <div class="nav-menu">
+                <div class="nav-item">
+                    <a href="#about" class="nav-link" onclick="showTab('about')">About Me</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#skills" class="nav-link" onclick="showTab('skills')">Skills</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#projects" class="nav-link" onclick="showTab('projects')">Projects</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#resume" class="nav-link" onclick="showTab('resume')">Resume</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#contact" class="nav-link" onclick="showTab('contact')">Contact</a>
+                </div>
+            </div>
+            <div class="theme-toggle">
+                <button id="theme-btn" onclick="toggleTheme()">🌙</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- About Me Section -->
+        <section id="about" class="tab-content active">
+            <div class="container">
+                <h1>About Me</h1>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Hello! I'm Rishikesh Yogesh Boril a Computer Engineering student currently in my 4th year (BE), passionate about Python for Data Science and Artificial Intelligence. My journey in technology has been marked by consistent academic growth, with my CGPA improving from 5.84 in first year to 8.71 in third year.</p>
+                        
+                        <p>My domain expertise lies in Python for Data Science, particularly in AI applications. I've completed an internship at YBI Foundation in "AIML with Data Science" where I worked on image classification projects using TensorFlow.</p>
+                        
+                        <p>Beyond academics, I'm actively involved in research, having participated in the First International Conference on "Applications of AI in Engineering" (ICAAIE-25) with a paper on "Automated Retinal Analysis Using Deep Convolutional Networks."</p>
+                        
+                        <p>I believe in giving back to society through volunteering activities, including blood donation and community service during religious festivals.</p>
+                        
+                        <div class="goals">
+                            <h3>My Goals:</h3>
+                            <ul>
+                                <li>Advance my expertise in AI and Machine Learning</li>
+                                <li>Contribute to meaningful research in healthcare AI</li>
+                                <li>Build innovative solutions that impact society positively</li>
+                                <li>Continue learning and growing in the field of Data Science</li>
+                            </ul>
+                        </div>
+
+<!-- Testimonials div updated-->
+        <div class="testimonials-container">
+            <h2 class="testimonials-title">What People Say</h2>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="quote-icon">"</div>
+                    <p class="testimonial-text">
+                        "An exceptional student with outstanding problem-solving abilities. Their dedication to learning and innovative approach to projects consistently exceeded expectations."
+                    </p>
+                    <div class="testimonial-author">Prof. Prof. Sunil Yadav</div>
+                    <div class="testimonial-role">Computer Science Department</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="quote-icon">"</div>
+                    <p class="testimonial-text">
+                        "Working with them on our group project was amazing. They bring creative solutions and excellent teamwork skills. Always reliable and inspiring to work with."
+                    </p>
+                    <div class="testimonial-author">Hariom Salgar</div>
+                    <div class="testimonial-role">Classmate & Project Partner</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="quote-icon">"</div>
+                    <p class="testimonial-text">
+                        "Their technical expertise and attention to detail are impressive. They delivered high-quality work on time and showed great leadership throughout the internship."
+                    </p>
+                    <div class="testimonial-author">Prof. Anita Skinkar</div>
+                    <div class="testimonial-role">Assistant Professor</div>
+                </div>
+            </div>
+        </div>
+    
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="tab-content">
+            <div class="container">
+                <h1>Skills</h1>
+                <div class="skills-content">
+                    <div class="skills-category">
+                        <h3>Technical Skills</h3>
+                        <div class="skill-item">
+                            <span class="skill-name">Python</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Machine Learning</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">TensorFlow</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">PyTorch</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 70%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Core Java</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">HTML/CSS</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">JavaScript</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Node.js</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 65%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skills-category">
+                        <h3>Soft Skills</h3>
+                        <div class="soft-skills">
+                            <span class="soft-skill">Research & Analysis</span>
+                            <span class="soft-skill">Team Collaboration</span>
+                            <span class="soft-skill">Problem Solving</span>
+                            <span class="soft-skill">Project Management</span>
+                            <span class="soft-skill">Technical Writing</span>
+                            <span class="soft-skill">Public Speaking</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skills-category">
+                        <h3>Languages</h3>
+                        <div class="language-skills">
+                            <div class="language-item">
+                                <span>English</span>
+                                <span>Fluent</span>
+                            </div>
+                            <div class="language-item">
+                                <span>Spanish</span>
+                                <span>Beginner</span>
+                            </div>
+                            <div class="language-item">
+                                <span>Japanese</span>
+                                <span>Beginner</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Other sections will be added in next steps -->
+        <section id="projects" class="tab-content">
+            <div class="container">
+                <h1>Projects</h1>
+                
+                <!-- Project Filter -->
+                <div class="project-filter">
+                    <button class="filter-btn active" onclick="filterProjects('all')">All</button>
+                    <button class="filter-btn" onclick="filterProjects('ai-ml')">AI/ML</button>
+                    <button class="filter-btn" onclick="filterProjects('web')">Web Development</button>
+                    <button class="filter-btn" onclick="filterProjects('mobile')">Mobile Apps</button>
+                    <button class="filter-btn" onclick="filterProjects('research')">Research</button>
+                    <button class="filter-btn" onclick="filterProjects('games')">Games</button>
+                </div>
+
+                <!-- Projects Grid -->
+                <div class="projects-grid">
+                    <!-- AI/ML Projects -->
+                    <div class="project-card" data-category="ai-ml research">
+                        <div class="project-header">
+                            <h3>Diabetic Retinopathy Detection</h3>
+                            <span class="project-status">Published</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Deep Learning</span>
+                            <span class="tech-tag">CNN</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">TensorFlow</span>
+                        </div>
+                        <p class="project-description">
+                            Developed an automated retinal analysis system using Deep Convolutional Neural Networks for early detection of diabetic retinopathy. This project was part of my internship and later became a research paper.
+                        </p>
+                        <div class="project-highlights">
+                            <div class="highlight">
+                                <span class="highlight-icon">🎯</span>
+                                <span>High accuracy detection model</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">📊</span>
+                                <span>Medical image classification</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">🔬</span>
+                                <span>Published in ICAAIE-25</span>
+                            </div>
+                        </div>
+                        <div class="project-collaboration">
+                            <strong>Collaborators:</strong> Hariom Salgar<br>
+                            <strong>Guide:</strong> Prof. Sunil Yadav
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="ai-ml">
+                        <div class="project-header">
+                            <h3>Basic Image Classification</h3>
+                            <span class="project-status">Internship</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">CNN</span>
+                        </div>
+                        <p class="project-description">
+                            Built a fundamental image classification model using TensorFlow during my internship at YBI Foundation. The project focused on cats vs dogs classification to understand deep learning basics.
+                        </p>
+                        <div class="project-highlights">
+                            <div class="highlight">
+                                <span class="highlight-icon">🐱</span>
+                                <span>Cats vs Dogs Classification</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">📚</span>
+                                <span>Learning Project</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">🏢</span>
+                                <span>YBI Foundation Internship</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="ai-ml">
+                        <div class="project-header">
+                            <h3>Airline Scheduling Expert System</h3>
+                            <span class="project-status">Recognized</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">AI</span>
+                            <span class="tech-tag">Expert Systems</span>
+                            <span class="tech-tag">Flight Management</span>
+                        </div>
+                        <p class="project-description">
+                            Implemented an Expert System for airline scheduling and flight management. This project was specially recognized and praised by my AI subject teacher for its innovative approach.
+                        </p>
+                        <div class="project-highlights">
+                            <div class="highlight">
+                                <span class="highlight-icon">✈️</span>
+                                <span>Flight Management System</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">🏆</span>
+                                <span>Teacher Recognition</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">🧠</span>
+                                <span>Expert System Implementation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Web Development Projects -->
+                    <div class="project-card" data-category="web">
+                        <div class="project-header">
+                            <h3>Cloud Services Demonstration</h3>
+                            <span class="project-status">Completed</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Cloud Computing</span>
+                        </div>
+                        <p class="project-description">
+                            Created a web-based demonstration of cloud services architecture with case studies including Marvel immigration with Disney and Netflix. Combined physical cardboard demonstration with interactive web page.
+                        </p>
+                        <div class="project-highlights">
+                            <div class="highlight">
+                                <span class="highlight-icon">☁️</span>
+                                <span>Cloud Architecture Demo</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">📱</span>
+                                <span>Interactive Web Interface</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">🎬</span>
+                                <span>Real-world Case Studies</span>
+                            </div>
+                        </div>
+                        <div class="project-collaboration">
+                            <strong>Guide:</strong> Prof. Chaitali Sartape
+                        </div>
+                    </div>
+
+                    <!-- Console and Mobile Development Projects -->
+                    <div class="project-card" data-category="mobile">
+                        <div class="project-header">
+                            <h3>Travel and Tourism Desktop App</h3>
+                            <span class="project-status">Completed</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Java</span>
+                            <span class="tech-tag">Eclipse IDE</span>
+                            <span class="tech-tag">Desktop App</span>
+                        </div>
+                        <p class="project-description">
+                            Developed a comprehensive travel and tourism desktop application using Java in Eclipse IDE. The application provides travel planning and booking functionalities.
+                        </p>
+                        <div class="project-highlights">
+                            <div class="highlight">
+                                <span class="highlight-icon">🗺️</span>
+                                <span>Travel Planning System</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">💻</span>
+                                <span>Desktop Application</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">👥</span>
+                                <span>Team Collaboration</span>
+                            </div>
+                        </div>
+                        <div class="project-collaboration">
+                            <strong>Collaborators:</strong> Darshan Bele
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="mobile">
+                        <div class="project-header">
+                            <h3>Health Guard: Pill Reminder</h3>
+                            <span class="project-status">Completed</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Android Studio</span>
+                            <span class="tech-tag">Mobile App</span>
+                            <span class="tech-tag">Healthcare</span>
+                        </div>
+                        <p class="project-description">
+                            Developed "Health Guard: Your Pill Reminder Partner" - a medicine reminder application for Android devices. Created as part of PBL-2 project in second year.
+                        </p>
+                        <div class="project-highlights">
+                            <div class="highlight">
+                                <span class="highlight-icon">💊</span>
+                                <span>Medicine Reminder System</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">📱</span>
+                                <span>Android Application</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">🏥</span>
+                                <span>Healthcare Solution</span>
+                            </div>
+                        </div>
+                        <div class="project-collaboration">
+                            <strong>Guide:</strong> Assistant Professor Payal T. Budhe
+                        </div>
+                    </div>
+
+                    <!-- Research Projects -->
+                    <div class="project-card" data-category="research">
+                        <div class="project-header">
+                            <h3>Ultrasonic Interferometer Research</h3>
+                            <span class="project-status">Research</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Physics</span>
+                            <span class="tech-tag">Acoustics</span>
+                            <span class="tech-tag">Research</span>
+                        </div>
+                        <p class="project-description">
+                            Conducted research on "Ultrasonic Interferometer to determine speed of sound through binary solution" focusing on acetone concentration effects. First-year research project.
+                        </p>
+                        <div class="project-highlights">
+                            <div class="highlight">
+                                <span class="highlight-icon">🔬</span>
+                                <span>Scientific Research</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">📊</span>
+                                <span>Data Analysis</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">🧪</span>
+                                <span>Laboratory Work</span>
+                            </div>
+                        </div>
+                        <div class="project-collaboration">
+                            <strong>Guide:</strong> Dr. Anirvan Gupta
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="research">
+                        <div class="project-header">
+                            <h3>Radar Detection System</h3>
+                            <span class="project-status">PBL Project</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Arduino UNO</span>
+                            <span class="tech-tag">Ultrasound Sensors</span>
+                            <span class="tech-tag">Electronics</span>
+                        </div>
+                        <p class="project-description">
+                            Built a radar detection system using Arduino UNO and ultrasound sensors as part of first-year PBL group competition. Created comprehensive project documentation.
+                        </p>
+                        <div class="project-highlights">
+                            <div class="highlight">
+                                <span class="highlight-icon">📡</span>
+                                <span>Radar System</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">🔧</span>
+                                <span>Hardware Project</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">👥</span>
+                                <span>Team Competition</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Games Projects -->
+                    <div class="project-card" data-category="games">
+                        <div class="project-header">
+                            <h3>Escape Room Mini Game</h3>
+                            <span class="project-status">Completed</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Computer Graphics</span>
+                            <span class="tech-tag">Game Development</span>
+                        </div>
+                        <p class="project-description">
+                            Developed "Escape Room in a Box" - a mini game project as part of Computer Graphics subject in second year. Focus on interactive game mechanics and visual design.
+                        </p>
+                        <div class="project-highlights">
+                            <div class="highlight">
+                                <span class="highlight-icon">🎮</span>
+                                <span>Interactive Game</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">🎨</span>
+                                <span>Graphics Programming</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">🧩</span>
+                                <span>Puzzle Game Logic</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="games">
+                        <div class="project-header">
+                            <h3>Calculator & Snake Game</h3>
+                            <span class="project-status">Learning Projects</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Programming</span>
+                            <span class="tech-tag">Game Logic</span>
+                            <span class="tech-tag">UI Design</span>
+                        </div>
+                        <p class="project-description">
+                            Created classic calculator application and snake game as foundational programming projects to understand basic algorithms and user interface design.
+                        </p>
+                        <div class="project-highlights">
+                            <div class="highlight">
+                                <span class="highlight-icon">🧮</span>
+                                <span>Calculator App</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">🐍</span>
+                                <span>Snake Game</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-icon">📚</span>
+                                <span>Learning Projects</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="resume" class="tab-content">
+            <div class="container">
+                <h1>Resume</h1>
+                <div class="resume-content">
+                    <div class="resume-header">
+                        <div class="resume-download">
+                            <button class="download-btn" onclick="viewResume()">
+                                <span>📄</span> View Resume
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="resume-sections">
+                        <!-- Education Section -->
+                        <div class="resume-section">
+                            <h3>🎓 Education</h3>
+                            <div class="resume-item">
+                                <div class="resume-item-header">
+                                    <h4>Bachelor of Engineering - Computer Engineering</h4>
+                                    <span class="resume-date">2022 - 2026</span>
+                                </div>
+                                <p class="resume-institution">Dr. D. Y. Patil College of Engineering and Innovation</p>
+                                <div class="resume-details">
+                                    <p><strong>CGPA Progress:</strong> 5.84 (1st Year) → 7.27 (2nd Year) → 8.71 (3rd Year)</p>
+                                    <p><strong>Honors:</strong> Data Science (alongside regular academics)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Experience Section -->
+                        <div class="resume-section">
+                            <h3>💼 Experience</h3>
+                            <div class="resume-item">
+                                <div class="resume-item-header">
+                                    <h4>AI/ML with Data Science Intern</h4>
+                                    <span class="resume-date">3rd Year</span>
+                                </div>
+                                <p class="resume-institution">YBI Foundation</p>
+                                <div class="resume-details">
+                                    <ul>
+                                        <li>Developed basic image classification model using TensorFlow (Cats vs Dogs)</li>
+                                        <li>Built Diabetic Retinopathy Detection system using Deep Convolutional Neural Networks</li>
+                                        <li>Gained hands-on experience with medical image analysis</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Technical Skills Section -->
+                        <div class="resume-section">
+                            <h3>🛠️ Technical Skills</h3>
+                            <div class="skills-grid">
+                                <div class="skill-category-resume">
+                                    <h5>Programming Languages</h5>
+                                    <p>Python, Core Java, JavaScript, HTML, CSS</p>
+                                </div>
+                                <div class="skill-category-resume">
+                                    <h5>AI/ML Frameworks</h5>
+                                    <p>TensorFlow, PyTorch, Machine Learning</p>
+                                </div>
+                                <div class="skill-category-resume">
+                                    <h5>Development Tools</h5>
+                                    <p>Eclipse IDE, Android Studio, Node.js</p>
+                                </div>
+                                <div class="skill-category-resume">
+                                    <h5>Languages</h5>
+                                    <p>English (Fluent), Spanish (Beginner), Japanese (Beginner)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Certifications Section -->
+                        <div class="resume-section">
+                            <h3>📜 Certifications</h3>
+                            <div class="certifications-grid">
+                                <div class="cert-item">
+                                    <h5>Zensar Digital 101</h5>
+                                    <p>NASSCOM Future Skill Prime</p>
+                                </div>
+                                <div class="cert-item">
+                                    <h5>Python for Beginners</h5>
+                                    <p>Coursera Project Network</p>
+                                </div>
+                                <div class="cert-item">
+                                    <h5>Parking Precision System</h5>
+                                    <p>Infosys Centrado Kit</p>
+                                </div>
+                                <div class="cert-item">
+                                    <h5>Back-End Apps with Node.js</h5>
+                                    <p>IBM</p>
+                                </div>
+                                <div class="cert-item">
+                                    <h5>Cyber Awareness Quiz</h5>
+                                    <p>Quick Heal Foundation (80%)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Publications Section -->
+                        <div class="resume-section">
+                            <h3>📚 Publications</h3>
+                            <div class="resume-item">
+                                <div class="resume-item-header">
+                                    <h4>Automated Retinal Analysis Using Deep Convolutional Networks</h4>
+                                    <span class="resume-date">2025</span>
+                                </div>
+                                <p class="resume-institution">First International Conference on Applications of AI in Engineering (ICAAIE-25)</p>
+                                <div class="resume-details">
+                                    <p><strong>Co-authors:</strong> Hariom Salgar</p>
+                                    <p><strong>Guide:</strong> Prof. Sunil Yadav</p>
+                                    <p><strong>Status:</strong> Accepted for publication in peer-reviewed International Journal</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- NPTEL Courses Section -->
+                        <div class="resume-section">
+                            <h3>📖 NPTEL Courses (SWAYAM)</h3>
+                            <div class="nptel-courses">
+                                <div class="course-item">Web Technology (IGNOU)</div>
+                                <div class="course-item">AI using Prolog Programming</div>
+                                <div class="course-item">Python for Data Science</div>
+                                <div class="course-item">Data Analytics with Python</div>
+                                <div class="course-item">Cloud Computing</div>
+                                <div class="course-item">AI: Knowledge Representation</div>
+                                <div class="course-item">Programming in Java</div>
+                                <div class="course-item">Cyber Security and Privacy</div>
+                            </div>
+                        </div>
+
+                        <!-- Volunteering Section -->
+                        <div class="resume-section">
+                            <h3>🤝 Volunteering</h3>
+                            <div class="volunteer-activities">
+                                <div class="volunteer-item">
+                                    <h5>Blood Donation</h5>
+                                    <p>Regular blood donor for 3 years during engineering</p>
+                                </div>
+                                <div class="volunteer-item">
+                                    <h5>Community Service</h5>
+                                    <p>Umbrella & raincoat distribution for Varkari pilgrims (June 2025)</p>
+                                </div>
+                                <div class="volunteer-item">
+                                    <h5>Cultural Activities</h5>
+                                    <p>DYPCC Cultural Club - Drumset & Guitar</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    <!-- Contact Section -->
+<section id="contact" class="tab-content">
+    <div class="container">
+        <h1>Contact Me</h1>
+        <div class="contact-content">
+            <div class="contact-info">
+                <div class="contact-card">
+                    <h3>Let's Connect!</h3>
+                    <p>I'm always open to discussing new opportunities, collaborations, or just having a chat about AI and Data Science. Feel free to reach out!</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div class="contact-text">
+                                <h4>Email</h4>
+                                <p><a href="mailto:tpagare951@gmail.com">tpagare951@gmail.com</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">📱</div>
+                            <div class="contact-text">
+                                <h4>Phone</h4>
+                                <p><a href="tel:+919699065121">+91 9699065121</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div class="contact-text">
+                                <h4>Location</h4>
+                                <p>Pune, Maharashtra, India</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <h4>Find me on:</h4>
+                        <div class="social-buttons">
+                            <a href="https://www.linkedin.com/in/rishikesh-boril-a740b9270/" class="social-btn linkedin" target="_blank">
+                                <span class="social-icon">💼</span>
+                                LinkedIn
+                            </a>
+                            <a href="https://github.com/RishikeshBoril616/TNSIF-CoreJava-CodeBase-RishikeshBoril" class="social-btn github" target="_blank">
+                                <span class="social-icon">🐱</span>
+                                GitHub
+                            </a>
+                            <a href="https://www.kaggle.com/mrwayne616" class="social-btn kaggle" target="_blank">
+                                <span class="social-icon">📊</span>
+                                Kaggle
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form-card">
+                    <h3>Send me a message</h3>
+                    <form class="contact-form" onsubmit="submitForm(event)">
+                        <div class="form-group">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <span>📤</span>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="achievements-showcase">
+                <h3>Recent Achievements</h3>
+                <div class="achievement-cards">
+                    <div class="achievement-card">
+                        <div class="achievement-icon">🏆</div>
+                        <h4>Research Publication</h4>
+                        <p>Paper accepted at ICAAIE-25 conference</p>
+                    </div>
+                    <div class="achievement-card">
+                        <div class="achievement-icon">📈</div>
+                        <h4>Academic Progress</h4>
+                        <p>CGPA improved from 5.84 to 8.71</p>
+                    </div>
+                    <div class="achievement-card">
+                        <div class="achievement-icon">🎯</div>
+                        <h4>AI Specialization</h4>
+                        <p>Honors in Data Science</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <div id="visitor-counter" style="text-align: center; font-size: 14px; color: #666; padding: 10px;">
+        👀 You are visitor number: 1
+        </div>
+
+    </main>
+
+    <script>
+// Theme Management
+function toggleTheme() {
+    const body = document.body;
+    const themeBtn = document.getElementById('theme-btn');
+    
+    if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        themeBtn.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+    } else {
+        body.setAttribute('data-theme', 'dark');
+        themeBtn.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+    }
+}
+
+// Load saved theme
+function loadTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const themeBtn = document.getElementById('theme-btn');
+    
+    if (savedTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        themeBtn.textContent = '☀️';
+    } else {
+        themeBtn.textContent = '🌙';
+    }
+}
+
+// Project filtering functionality
+function filterProjects(category) {
+    const projects = document.querySelectorAll('.project-card');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    
+    // Update active filter button
+    filterBtns.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Filter projects
+    projects.forEach(project => {
+        const projectCategories = project.getAttribute('data-category').split(' ');
+        
+        if (category === 'all' || projectCategories.includes(category)) {
+            project.classList.remove('hidden');
+            project.style.opacity = '0';
+            project.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                project.style.opacity = '1';
+                project.style.transform = 'translateY(0)';
+                project.style.transition = 'all 0.5s ease';
+            }, 100);
+        } else {
+            project.classList.add('hidden');
+        }
+    });
+}
+
+// Add project card animations
+function animateProjectCards() {
+    const cards = document.querySelectorAll('.project-card');
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+            card.style.transition = 'all 0.6s ease';
+        }, index * 100);
+    });
+}
+
+// Enhanced tab management with project animations
+function showTab(tabName) {
+    // Hide all tab content sections
+    const allTabContents = document.querySelectorAll('.tab-content');
+    allTabContents.forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Remove active class from all nav links
+    const allNavLinks = document.querySelectorAll('.nav-link');
+    allNavLinks.forEach(link => {
+        link.classList.remove('active');
+    });
+    
+    // Add active class to the selected tab section
+    const selectedTab = document.getElementById(tabName);
+    if (selectedTab) {
+        selectedTab.classList.add('active');
+    }
+    
+    // Add active class to the clicked nav link
+    const activeNavLink = document.querySelector(`[onclick="showTab('${tabName}')"]`) || 
+                        document.querySelector(`[data-tab="${tabName}"]`);
+    if (activeNavLink) {
+        activeNavLink.classList.add('active');
+    }
+}
+
+// Animate skill bars
+function animateSkills() {
+    const skillBars = document.querySelectorAll('.skill-progress');
+    skillBars.forEach(bar => {
+        const width = bar.style.width;
+        bar.style.width = '0%';
+        setTimeout(() => {
+            bar.style.width = width;
+        }, 100);
+    });
+}
+
+// Smooth scrolling for navigation
+function smoothScroll(target) {
+    document.querySelector(target).scrollIntoView({
+        behavior: 'smooth'
+    });
+}
+
+// Mobile menu toggle
+function toggleMobileMenu() {
+    const navMenu = document.querySelector('.nav-menu');
+    navMenu.classList.toggle('active');
+}
+
+// Real-time Form Validation
+function initFormValidation() {
+    const nameField = document.querySelector('input[name="name"]');
+    const emailField = document.querySelector('input[name="email"]');
+    const messageField = document.querySelector('textarea[name="message"]');
+    
+    // Email regex pattern
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+    // Validation functions
+    function validateField(field, validationFn, errorMessage) {
+        const isValid = validationFn(field.value.trim());
+        const errorElement = field.parentElement.querySelector('.error-message');
+        
+        if (isValid) {
+            field.classList.remove('invalid');
+            field.classList.add('valid');
+            if (errorElement) {
+                errorElement.remove();
+            }
+        } else {
+            field.classList.remove('valid');
+            field.classList.add('invalid');
+            
+            if (!errorElement) {
+                const error = document.createElement('span');
+                error.className = 'error-message';
+                error.textContent = errorMessage;
+                field.parentElement.appendChild(error);
+            }
+        }
+        
+        return isValid;
+    }
+    
+    // Individual field validators
+    function validateName(value) {
+        return value.length > 0;
+    }
+    
+    function validateEmail(value) {
+        return emailRegex.test(value);
+    }
+    
+    function validateMessage(value) {
+        return value.length > 0;
+    }
+    
+    // Add event listeners for real-time validation
+    if (nameField) {
+        nameField.addEventListener('input', function() {
+            validateField(this, validateName, 'Name is required');
+        });
+        
+        nameField.addEventListener('blur', function() {
+            validateField(this, validateName, 'Name is required');
+        });
+    }
+    
+    if (emailField) {
+        emailField.addEventListener('input', function() {
+            validateField(this, validateEmail, 'Please enter a valid email address');
+        });
+        
+        emailField.addEventListener('blur', function() {
+            validateField(this, validateEmail, 'Please enter a valid email address');
+        });
+    }
+    
+    if (messageField) {
+        messageField.addEventListener('input', function() {
+            validateField(this, validateMessage, 'Message is required');
+        });
+        
+        messageField.addEventListener('blur', function() {
+            validateField(this, validateMessage, 'Message is required');
+        });
+    }
+}
+
+// Check if entire form is valid
+function isFormValid() {
+    const validFields = document.querySelectorAll('.valid');
+    const invalidFields = document.querySelectorAll('.invalid');
+    const totalFields = document.querySelectorAll('input[name], textarea[name]').length;
+    
+    return validFields.length === totalFields && invalidFields.length === 0;
+}
+
+// Contact form submission handler
+function submitForm(event) {
+    event.preventDefault();
+    
+    // Get form data
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value;
+    
+    // Basic validation
+    if (!name || !email || !subject || !message) {
+        alert('Please fill in all required fields.');
+        return;
+    }
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        return;
+    }
+    
+    // Success message
+    alert('Thank you for your message! I will get back to you soon.');
+    
+    // Reset form
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('subject').value = '';
+    document.getElementById('message').value = '';
+    
+    // You can replace this with actual email sending logic
+    console.log('Form submitted:', { name, email, subject, message });
+}
+
+        function viewResume() {
+            // Replace 'your-resume-url-here' with the actual URL of your resume
+            const resumeUrl = 'your-resume-url-here'; // Put your resume URL here
+            
+            // Open resume in a new tab for viewing
+            window.open(resumeUrl, '_blank');
+        }
+
+// Visitor Counter using localStorage
+function initVisitorCounter() {
+    // Check if visitor count exists in localStorage
+    let visitorCount = localStorage.getItem('visitorCount');
+    
+    if (visitorCount === null) {
+        // First time visitor - initialize to 1
+        visitorCount = 1;
+    } else {
+        // Returning visitor - increment count
+        visitorCount = parseInt(visitorCount) + 1;
+    }
+    
+    // Save updated count to localStorage
+    localStorage.setItem('visitorCount', visitorCount);
+    
+    // Display the count in the div
+    const counterDiv = document.getElementById('visitor-counter');
+    if (counterDiv) {
+        counterDiv.innerHTML = `👀 You are visitor number: ${visitorCount}`;
+    }
+}
+
+// Add intersection observer for animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Add scroll effect to navbar
+window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+        navbar.style.background = 'rgba(248, 250, 252, 0.95)';
+        navbar.style.backdropFilter = 'blur(10px)';
+    } else {
+        navbar.style.background = 'var(--surface-color)';
+        navbar.style.backdropFilter = 'none';
+    }
+});
+
+// Initialize visitor counter when page loads
+window.addEventListener('load', initVisitorCounter);
+
+// Main DOM Content Loaded Handler - Consolidates all initialization
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize theme
+    loadTheme();
+    
+    // Initialize form validation
+    initFormValidation();
+    
+    // Set first tab as active
+    const firstNavLink = document.querySelector('.nav-link');
+    if (firstNavLink) {
+        firstNavLink.classList.add('active');
+    }
+    
+    // Add form input animations
+    const formInputs = document.querySelectorAll('.form-group input, .form-group textarea');
+    formInputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            input.parentElement.style.transform = 'translateY(-2px)';
+            input.parentElement.style.transition = 'transform 0.3s ease';
+        });
+        
+        input.addEventListener('blur', () => {
+            input.parentElement.style.transform = 'translateY(0)';
+        });
+    });
+    
+    // Apply observer to elements for scroll animations
+    const elementsToAnimate = document.querySelectorAll('.skills-category, .about-content');
+    elementsToAnimate.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'all 0.6s ease';
+        observer.observe(el);
+    });
+    
+    // Add hover effects to skill bars
+    const skillItems = document.querySelectorAll('.skill-item');
+    skillItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            item.style.transform = 'translateX(10px)';
+            item.style.transition = 'transform 0.3s ease';
+        });
+        
+        item.addEventListener('mouseleave', () => {
+            item.style.transform = 'translateX(0)';
+        });
+    });
+    
+    // Add typing effect to goals
+    const goals = document.querySelectorAll('.goals li');
+    goals.forEach((goal, index) => {
+        goal.style.opacity = '0';
+        goal.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            goal.style.opacity = '1';
+            goal.style.transform = 'translateY(0)';
+            goal.style.transition = 'all 0.5s ease';
+        }, index * 200);
+    });
+});
+    </script>
+</body>
+</html>
